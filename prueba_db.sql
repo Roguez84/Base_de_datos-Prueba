@@ -189,27 +189,27 @@ VALUES (10, 4, 3);
 
 --Consultas
 --tabla general para mi referencia
-SELECT id_fac, fecha, id_cli, nombre, ID_pro, nombre_producto, valor_unitario, cantidad, valor_unitario*cantidad as valor_total
-FROM ((
-        SELECT *
-        FROM info_cliente i JOIN factura f ON i.ID_cli = f.id_cliente
-    )  AS cliente_factura
-    JOIN cantidades ON cantidades.id_factura = cliente_factura.ID_fac ) AS cliente_factura_cantidad
-    JOIN productos ON productos.ID_pro = cliente_factura_cantidad.id_producto
-;
+--SELECT id_fac, fecha, id_cli, nombre, ID_pro, nombre_producto, valor_unitario, cantidad, valor_unitario*cantidad as valor_total
+--FROM ((
+--       SELECT *
+--        FROM info_cliente i JOIN factura f ON i.ID_cli = f.id_cliente
+--    )  AS cliente_factura
+--    JOIN cantidades ON cantidades.id_factura = cliente_factura.ID_fac ) AS cliente_factura_cantidad
+--    JOIN productos ON productos.ID_pro = cliente_factura_cantidad.id_producto
+--;
 
 --Otra tabla general mas completa para mi referencia
-SELECT id_fac, fecha, id_cli, nombre, ID_pro, nombre_producto, valor_unitario, cantidad, valor_sin_iva, iva, valor_total
-FROM (
-        SELECT *, valor_unitario*cantidad AS valor_sin_iva, valor_unitario*cantidad*0.19 AS IVA, (valor_unitario*cantidad + valor_unitario*cantidad*0.19)  AS valor_total
-        FROM ((
-            SELECT *
-            FROM info_cliente i JOIN factura f ON i.ID_cli = f.id_cliente
-            )  AS cliente_factura
-            JOIN cantidades ON cantidades.id_factura = cliente_factura.ID_fac ) AS cliente_factura_cantidad
-            JOIN productos ON productos.ID_pro = cliente_factura_cantidad.id_producto
-    ) AS tablisima
-;
+--SELECT id_fac, fecha, id_cli, nombre, ID_pro, nombre_producto, valor_unitario, cantidad, valor_sin_iva, iva, valor_total
+--FROM (
+--        SELECT *, valor_unitario*cantidad AS valor_sin_iva, valor_unitario*cantidad*0.19 AS IVA, (valor_unitario*cantidad + valor_unitario*cantidad*0.19)  AS valor_total
+--        FROM ((
+--            SELECT *
+--           FROM info_cliente i JOIN factura f ON i.ID_cli = f.id_cliente
+--            )  AS cliente_factura
+--            JOIN cantidades ON cantidades.id_factura = cliente_factura.ID_fac ) AS cliente_factura_cantidad
+--            JOIN productos ON productos.ID_pro = cliente_factura_cantidad.id_producto
+--    ) AS tablisima
+--;
 
 --Que cliente realizo la compra mas cara?
 SELECT nombre, ID_fac, fecha, sum(valor_total) AS total
@@ -225,8 +225,8 @@ FROM (
 GROUP BY ID_fac, fecha, nombre
 ORDER BY total DESC
 LIMIT 1
+--Que cliente realizo la compra mas cara?
 ;
-
 
 --Que cliente pago sobre 100 de monto?
 SELECT *
@@ -245,6 +245,7 @@ FROM (
     GROUP BY nombre
     ) AS resumen   
 WHERE total >100
+--Que cliente pago sobre 100 de monto?
 ;
 
 --Cuantos clientes han comprado el producto 6?
@@ -259,4 +260,5 @@ FROM (
             JOIN productos ON productos.ID_pro = cliente_factura_cantidad.id_producto
     ) AS tablisima
 WHERE id_pro =6
+--Cuantos clientes han comprado el producto 6?
 ;
